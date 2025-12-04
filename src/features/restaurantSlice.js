@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async () => {
-    const res = await axios.get("http://localhost:8080/find");
+    const res = await axios.get("https://backend-3gor.onrender.com/find");
     return res.data;
   }
 );
@@ -28,24 +28,24 @@ const restaurantSlice = createSlice({
     },
 
     setSearchText: (state, action) => {
-  state.searchText = action.payload.toLowerCase();
-  restaurantSlice.caseReducers.applyFilters(state); 
-},
+      state.searchText = action.payload.toLowerCase();
+      restaurantSlice.caseReducers.applyFilters(state);
+    },
 
 
     applyFilters: (state) => {
-  const search = state.searchText;
-  const selected = state.selected;
+      const search = state.searchText;
+      const selected = state.selected;
 
-  state.filteredData = state.data.filter((item) => {
-    const name = item?.name?.toLowerCase() || "";
+      state.filteredData = state.data.filter((item) => {
+        const name = item?.name?.toLowerCase() || "";
 
-    const matchSearch = name.includes(search);
-    const matchDropdown = selected ? item.name === selected : true;
+        const matchSearch = name.includes(search);
+        const matchDropdown = selected ? item.name === selected : true;
 
-    return matchSearch && matchDropdown;
-  });
-}
+        return matchSearch && matchDropdown;
+      });
+    }
   },
 
   extraReducers: (builder) => {
@@ -57,7 +57,7 @@ const restaurantSlice = createSlice({
       .addCase(fetchRestaurants.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-        state.filteredData = action.payload; 
+        state.filteredData = action.payload;
       })
 
       .addCase(fetchRestaurants.rejected, (state) => {
