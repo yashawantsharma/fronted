@@ -5,6 +5,9 @@ export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async () => {
     const res = await axios.get("https://backend-3gor.onrender.com/find");
+
+
+
     return res.data;
   }
 );
