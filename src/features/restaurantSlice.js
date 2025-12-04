@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async () => {
-    const res = await axios.get("https://backend-3gor.onrender.com/find");
+    const res = await axios.get("https://backend1-hv8q.onrender.com/find");
 
 
 
