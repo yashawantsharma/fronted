@@ -19,7 +19,7 @@ const Detail = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("http://localhost:8080/find");
+      const res = await axios.get("https://backend1-hv8q.onrender.com/find");
       setRestaurant(res.data[Number(id)]);
     }
     fetchData();
