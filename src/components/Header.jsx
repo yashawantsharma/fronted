@@ -6,122 +6,115 @@ import { toggleView } from "../features/viewSlice";
 import { setSelectedRestaurant, setSearchText } from "../features/restaurantSlice";
 import { openSidebar } from "../features/sidebarSlice";
 
-
-
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const theme = useSelector((state) => state.theme.mode);
   const mode = useSelector((state) => state.view.mode);
-  
-
-
   const restaurantList = useSelector((state) => state.restaurants.data);
   const selected = useSelector((state) => state.restaurants.selected);
-
   const cart = useSelector((state) => state.cart.items);
 
-  const nav = () => {
-    navigate("/chat");
+  const handelCart = () => {
+    const user = sessionStorage.getItem("login");
+    if (!user) {
+      alert("Please login first to continue");
+      navigate("/login");
+    } else {
+      navigate("/cart");
+    }
   };
 
   return (
     <header
-      style={{
-        background: theme === "dark" ? "#222" : "white",
-        color: theme === "dark" ? "white" : "black",
-      }}
-      className="w-full shadow-sm p-4 flex justify-between items-center sticky top-0 z-50"
+      className={`w-full shadow-sm p-2 sm:p-4 flex flex-nowrap justify-between items-center sticky top-0 z-50 ${
+        theme === "dark" ? "bg-[#222] text-white" : "bg-white text-black"
+      }`}
     >
-      <button  onClick={() => dispatch(openSidebar())} className="text-2xl mr-4">
-        ☰
-      </button>
+    
+      <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        <button onClick={() => dispatch(openSidebar())} className="text-2xl">
+          ☰
+        </button>
+        <Link to="/" className="text-xl sm:text-2xl font-bold text-red-600">
+          FoodExpress
+        </Link>
+      </div>
 
-      <Link to="/" className="text-2xl font-bold text-red-600">
-        FoodExpress
-      </Link>
-
+     
       <div
-        className="w-1/3 px-3 py-2 rounded-full flex items-center"
-        style={{
-          background: theme === "dark" ? "#333" : "#eee",
-          color: theme === "dark" ? "white" : "black",
-        }}
+        className={`flex items-center flex-grow mx-2 min-w-0 ${
+          theme === "dark" ? "bg-[#333] text-white" : "bg-[#eee] text-black"
+        } rounded-full px-2 sm:px-3`}
+        style={{ minHeight: "40px" }}
       >
         <input
           type="text"
           placeholder="Search restaurants..."
-          className="w-full bg-transparent outline-none"
+          className="w-full bg-transparent outline-none truncate text-sm sm:text-base"
           onChange={(e) => dispatch(setSearchText(e.target.value))}
         />
         <span>🔍</span>
       </div>
 
-      <div className="relative z-40">
+      
+      <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
+
         <select
           value={selected}
           onChange={(e) => dispatch(setSelectedRestaurant(e.target.value))}
-          className="px-3 py-2 border-2 rounded-lg"
+          className={`hidden sm:block px-2 sm:px-3 sm:py-2 border-2 rounded-lg text-sm sm:text-base ${
+            theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+          }`}
         >
           <option value="">All Restaurants</option>
-
           {restaurantList.map((r, index) => (
             <option key={index} value={r.name}>
               {r.name}
             </option>
           ))}
         </select>
-      </div>
-
-      <div className="flex items-center gap-6">
 
         <button
           onClick={() => dispatch(toggleTheme())}
-          className="px-4 py-2 rounded-full border"
-          style={{
-            background: theme === "dark" ? "white" : "black",
-            color: theme === "dark" ? "black" : "white",
-          }}
+          className="px-2 sm:px-3 py-1 sm:py-2 rounded-full border flex items-center justify-center text-base"
         >
-          {theme === "dark" ? "Light" : "Dark"}
+          {theme === "dark" ? "🌞" : "🌙"}
         </button>
 
-        <Link to="/cart" className="relative text-2xl">
+        <button className="relative text-2xl" onClick={handelCart}>
           🛒
           {cart.length > 0 && (
             <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
               {cart.length}
             </span>
           )}
-        </Link>
+        </button>
+
 
         <button
           onClick={() => dispatch(toggleView())}
-          className="px-3 py-2 text-white rounded text-xl"
+          className="px-2 sm:px-3 py-1 sm:py-2 text-white rounded text-xl"
         >
           {mode === "card" ? "📊" : "🔲"}
         </button>
 
-        {/* <button
-          onClick={nav}
-          className="
-            fixed bottom-6 right-6
-            z-30
-            bg-gradient-to-r from-purple-600 to-indigo-600
-            text-white px-5 py-3 rounded-full shadow-xl
-            text-xl font-bold hover:scale-110 transition-all
-          "
-        >
-          🤖 AI
-        </button> */}
 
-        <Link to="/login" className="px-4 py-2 rounded-full border">
-          Login
+        <Link
+          to="/login"
+          className="px-2 sm:px-4 py-1 sm:py-2 rounded-full border text-sm sm:text-base"
+        >
+          <span className="sm:hidden">L</span>
+          <span className="hidden sm:inline">Login</span>
         </Link>
 
-        <Link to="/signup" className="px-4 py-2 rounded-full bg-red-500 text-white">
-          Sign Up
+        <Link
+          to="/signup"
+          className="px-2 sm:px-4 py-1 sm:py-2 rounded-full bg-red-500 text-white text-sm sm:text-base"
+        >
+          <span className="sm:hidden">S</span>
+          <span className="hidden sm:inline">Sign Up</span>
         </Link>
       </div>
     </header>

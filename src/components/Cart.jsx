@@ -21,7 +21,7 @@ const Cart = () => {
   };
 
   const proceedToPayment = () => {
-    const user = localStorage.getItem("user");
+    const user = sessionStorage.getItem("login");
 
     if (!user) {
       alert("Please login first to continue");
@@ -31,11 +31,15 @@ const Cart = () => {
     }
   };
 
+    const handeladdress=(()=>{
+      navigate("/address")
+    })
+
   const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   return (
     <div
-      className={`max-w-lg mx-auto full p-4 mb-8 ${
+      className={`full p-5 ${
         theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
       }`}
     >
@@ -79,8 +83,15 @@ const Cart = () => {
 
       {cart.length > 0 && (
         <>
+        <div className="flex justify-between mt-3">
           <div className="mt-5 text-lg font-semibold">
             Total Amount: <span className="text-red-500">₹{total}</span>
+          </div>
+          <div className="flex items-center gap-3 bg-red-500 text-white px-3 py-1 rounded-full">
+            <button onClick={() => handeladdress()} className="text-xl font-bold">
+              Address
+            </button>
+            </div>
           </div>
 
           <button

@@ -20,9 +20,10 @@ const Home = () => {
 
   if (loading)
     return (
-      <h2 className="text-center mt-10 text-xl font-semibold text-gray-600">
-        Loading restaurants...
-      </h2>
+      <div className="flex justify-center mt-43 mb-43">
+  <div className="w-20 h-20 border-9 border-gray-300 border-t-blue-500 rounded-full animate-spin "></div>
+</div>
+
     );
 
 
@@ -76,12 +77,12 @@ const Home = () => {
                 </div>
 
 
-                <div className="flex items-center justify-between px-4 mt-3">
-                  <p className="text-sm font-semibold text-gray-800">
+                <div className={`flex items-center justify-between px-4 p-4  ${
+        theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+      }`}>
+                  <p className="text-sm-bold font-semibold text-gray-800">
 
                     ₹{item.cost_for_two}
-
-                    <span className="text-gray-400 text-xs"> for two</span>
                   </p>
 
                   <p className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded font-semibold">
@@ -90,7 +91,9 @@ const Home = () => {
                 </div>
 
 
-                <div className="p-4">
+                <div className={`p-4 ${
+        theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+      }`}>
                   <h2 className="font-semibold text-lg text-gray-800 truncate">
                     {item.name}
                   </h2>

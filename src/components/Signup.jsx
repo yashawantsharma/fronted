@@ -1,89 +1,150 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Signup = () => {
+  const theme = useSelector((state) => state.theme.mode);
 
-  const [formdata,setFormdata]=useState({
-    name:'',
-    email:'',
-    phone:'',
-    password:'',
-  })
-  const navigate=useNavigate()
-  const [error,setError]=useState({})
-  // const navigate = useNavigate()
-  const forml=(e)=>{
-    e.preventDefault()
-    
-    // navigate("/")
-    let result={}
-    if(!formdata.name){
-      result.name="* name is required"
-    }
-    if(!formdata.email){
-      result.email="* Email is required"
-    }
-    if(!formdata.phone){
-      result.phone="* Phone is required"
-    }
-    if(!formdata.password){
-      result.password="* Passwoed is required"
-    }
-    setError(result)
-    if(Object.keys(result).length===0){
-      alert("submited successfully")
-      localStorage.setItem("user",JSON.stringify(formdata))
-      navigate("/login")
+  const [formdata, setFormdata] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+  });
+
+  const navigate = useNavigate();
+  const [error, setError] = useState({});
+
+  const forml = (e) => {
+    e.preventDefault();
+
+    let result = {};
+    if (!formdata.name) result.name = "* name is required";
+    if (!formdata.email) result.email = "* Email is required";
+    if (!formdata.phone) result.phone = "* Phone is required";
+    if (!formdata.password) result.password = "* Password is required";
+
+    setError(result);
+
+    if (Object.keys(result).length === 0) {
+      alert("Submitted successfully");
+      localStorage.setItem("user", JSON.stringify(formdata));
+      sessionStorage.setItem("login", JSON.stringify(formdata));
+      navigate("/");
       setFormdata({
-      name:'',
-    email:'',
-    phone:'',
-    password:'',
-      })
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+      });
     }
-  }
-// bg-[url(bg2.png)]
+  };
+
   return (
-    <div className=''>
-      <form onSubmit={forml}>
-              <div className=' text-center border-2  h-125 ml-90 mr-90 '>
-        <h1 className=' mt-3 text-xl font-bold mt-10'>Sing up</h1>
-        <div className='mt-3'>
+    <div
+      className={`flex justify-center items-center ${
+        theme === "dark" ? "bg-[#000] text-white" : "bg-white text-black"
+      }`}
+    >
+      <form
+        onSubmit={forml}
+        className={`p-8 rounded-xl shadow-xl border ${
+          theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+        }`}
+      >
+        <h1 className="text-center text-xl font-bold mb-6">Sign Up</h1>
 
-            <label className='block'>UserName :-
-            <input type="text" placeholder='Enter Username'
-             className='border-1 rounded-full text-center mt-5 ml-5 p-1 w-70'
-             value={formdata.name} onChange={(e)=>setFormdata({...formdata,name:e.target.value})}/>
-             {error.name&&<p style={{color:"red"}}>{error.name}</p>}
-        </label> 
-
-        <label className='block'>Email   :-
-            <input type="email" placeholder='Enter Email'
-             className='border-1 rounded-full text-center mt-5 ml-13 p-1 w-70'
-             value={formdata.email} onChange={(e)=>setFormdata({...formdata,email:e.target.value})}/>
-             {error.email&&<p style={{color:"red"}}>{error.email}</p>}
+        {/* Username */}
+        <label className="block mb-4">
+          UserName :-
+          <input
+            type="text"
+            placeholder="Enter Username"
+            className={`border rounded-full w-full mt-2 p-2 text-center ${
+              theme === "dark"
+                ? "bg-[#000] text-white border-gray-600"
+                : "bg-white text-black border-gray-400"
+            }`}
+            value={formdata.name}
+            onChange={(e) =>
+              setFormdata({ ...formdata, name: e.target.value })
+            }
+          />
+          {error.name && <p className="text-red-500">{error.name}</p>}
         </label>
 
-        <label className='block'>Phone :-
-            <input type="number" placeholder='Enter Email'
-             className='border-1 rounded-full text-center mt-5 ml-11 p-1 w-70 '
-             value={formdata.phone} onChange={(e)=>{setFormdata({...formdata,phone:e.target.value})}}/>
-             {error.phone&&<p style={{color:"red"}}>{error.phone}</p>}
+        {/* Email */}
+        <label className="block mb-4">
+          Email :-
+          <input
+            type="email"
+            placeholder="Enter Email"
+            className={`border rounded-full w-full mt-2 p-2 text-center ${
+              theme === "dark"
+                ? "bg-[#000] text-white border-gray-600"
+                : "bg-white text-black border-gray-400"
+            }`}
+            value={formdata.email}
+            onChange={(e) =>
+              setFormdata({ ...formdata, email: e.target.value })
+            }
+          />
+          {error.email && <p className="text-red-500">{error.email}</p>}
         </label>
 
-        <label className='block'>Password :-
-            <input type="password" placeholder='Enter Email' className='border-1 rounded-full text-center mt-5 p-1 w-70 ml-6'
-            value={formdata.password} onChange={(e)=>{setFormdata({...formdata,password:e.target.value})}}/>
-            {error.password&&<p style={{color:"red "}}>{error.password}</p>}
+        {/* Phone */}
+        <label className="block mb-4">
+          Phone :-
+          <input
+            type="number"
+            placeholder="Enter Phone"
+            className={`border rounded-full w-full mt-2 p-2 text-center ${
+              theme === "dark"
+                ? "bg-[#000] text-white border-gray-600"
+                : "bg-white text-black border-gray-400"
+            }`}
+            value={formdata.phone}
+            onChange={(e) =>
+              setFormdata({ ...formdata, phone: e.target.value })
+            }
+          />
+          {error.phone && <p className="text-red-500">{error.phone}</p>}
         </label>
 
-        <button type='submit' className='rounded-full border-1 mt-5 p-3 w-30'><b>Submit</b></button>
-        </div>
-      </div>
+        {/* Password */}
+        <label className="block mb-4">
+          Password :-
+          <input
+            type="password"
+            placeholder="Enter Password"
+            className={`border rounded-full w-full mt-2 p-2 text-center ${
+              theme === "dark"
+                ? "bg-[#000] text-white border-gray-600"
+                : "bg-white text-black border-gray-400"
+            }`}
+            value={formdata.password}
+            onChange={(e) =>
+              setFormdata({ ...formdata, password: e.target.value })
+            }
+          />
+          {error.password && <p className="text-red-500">{error.password}</p>}
+        </label>
+
+       
+        <button
+          type="submit"
+          className={`rounded-full border mt-5 p-3 w-full font-bold ${
+            theme === "dark"
+              ? "bg-[#000] text-white border-gray-600"
+              : "bg-white text-black border-gray-400"
+          }`}
+        >
+          Submit
+        </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

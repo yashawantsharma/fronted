@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSidebar } from "../features/sidebarSlice";
 
@@ -6,6 +6,57 @@ const Sidebar = () => {
      const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.mode);
     const isOpen = useSelector((s) => s.sidebar.isOpen);
+    const navigate=useNavigate()
+
+    const handelcart=()=>{
+        dispatch(closeSidebar())
+        const user = sessionStorage.getItem("login");
+
+    if (!user) {
+      alert("Please login first to continue");
+      navigate("/login");
+    } else {
+      navigate("/cart");
+    }
+    }
+
+    const handellike=()=>{
+        dispatch(closeSidebar())
+         const user = sessionStorage.getItem("login");
+
+    if (!user) {
+        dispatch(closeSidebar())
+      alert("Please login first to continue");
+      navigate("/login");
+    } else {
+      navigate("/liked");
+    }
+    }
+
+    const handelorder=()=>{
+        dispatch(closeSidebar())
+         const user = sessionStorage.getItem("login");
+
+    if (!user) {
+        dispatch(closeSidebar())
+      alert("Please login first to continue");
+      navigate("/login");
+    } else {
+      navigate("/orders");
+    }
+    }
+
+    const handeladdress=()=>{
+        dispatch(closeSidebar())
+        const user = sessionStorage.getItem("login");
+
+    if (!user) {
+      alert("Please login first to continue");
+      navigate("/login");
+    } else {
+      navigate("/address");
+    }
+    }
 
     return (
         <div
@@ -18,33 +69,37 @@ const Sidebar = () => {
                 onClick={() => dispatch(closeSidebar())}
                 className="text-2xl mb-5"
             >
-                ✖
+                <div className="flex justify-between">
+                    <div> <h2 className="text-2xl font-bold">Menu  </h2>
+                    </div>
+                    <div><p className="ml-27"> ✖</p> </div>
+               
+                </div>
             </button>
 
-            <h2 className="text-2xl font-bold mb-6">Menu</h2>
+            
 
             <nav className="flex flex-col gap-4 text-lg">
 
-                <Link to="/" onClick={() => dispatch(closeSidebar())}className="hover:text-red-500">
+                <Link to="/" onClick={() => dispatch(closeSidebar())}className="hover:text-red-500 ml-2">
                     🏠 Home
                 </Link>
 
-                <Link to="/cart" onClick={() => dispatch(closeSidebar())}className="hover:text-red-500">
+                <button onClick={() => handelcart()}className="hover:text-red-500 mr-35">
                     🛒 Cart
-                </Link>
+                </button>
 
-                <Link
-                    to="/liked"
-                    onClick={() => dispatch(closeSidebar())}
-                    className="hover:text-red-500"
+                <button
+                    onClick={() => handellike()}
+                    className="hover:text-red-500 mr-22"
                 >
                     ❤️ Liked Items
-                </Link>
+                </button>
 
 
-                <Link to="/orders" onClick={() => dispatch(closeSidebar())}className="hover:text-red-500">
+                <button onClick={() =>handelorder()}className="hover:text-red-500 mr-25">
                     📦 My Orders
-                </Link>
+                </button>
 
                 {/* <Link to="/profile" onClick={() => setIsOpen(false)} className="hover:text-red-500">
                     👤 Profile
@@ -53,13 +108,12 @@ const Sidebar = () => {
                 {/* <Link to="/settings" onClick={() => setIsOpen(false)} className="hover:text-red-500">
                     ⚙️ Settings
                 </Link> */}
-                <Link
-                    to="/address"
-                    onClick={() => dispatch(closeSidebar())}
-                    className="hover:text-red-500"
+                <button
+                    onClick={() => handeladdress()}
+                    className="hover:text-red-500 mr-22"
                 >
                     📍 My Address
-                </Link>
+                </button>
 
             </nav>
         </div>

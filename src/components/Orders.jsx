@@ -5,6 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Orders = () => {
+  const theme=useSelector((state)=>state.theme.mode)
   const order = useSelector((state) => state.order.list);
   const dispatch = useDispatch();
 
@@ -17,7 +18,9 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-4">
+    <div className={` mx-auto p-4 ${
+        theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+      }`}>
 
       <h1 className="text-2xl font-bold mb-5">📦 My Orders</h1>
 
