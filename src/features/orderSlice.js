@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const orderSlice = createSlice({
   name: "order",
   initialState: {
+     
     list: [],
-    address: "",
+    address: null,
   },
 
   reducers: {

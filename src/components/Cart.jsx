@@ -8,7 +8,7 @@ import { incrementQty, decrementQty } from "../features/cartSlice";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const savedAddress = useSelector((state) => state.order.address);
   const theme = useSelector((state) => state.theme.mode);
   const cart = useSelector((state) => state.cart.items);
 
@@ -22,11 +22,15 @@ const Cart = () => {
 
   const proceedToPayment = () => {
     const user = sessionStorage.getItem("login");
+   
 
     if (!user) {
       alert("Please login first to continue");
       navigate("/login");
-    } else {
+    }   if (!savedAddress) {
+    alert("Please add your address first!");
+    navigate("/address");  
+  }else {
       navigate("/payment");
     }
   };

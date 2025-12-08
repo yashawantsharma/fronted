@@ -17,25 +17,23 @@ const Login = ({ setLogin }) => {
   const forml = (e) => {
     e.preventDefault()
 
-    const result = JSON.parse(localStorage.getItem("user"))
+    const resul = JSON.parse(localStorage.getItem("user"))
     setFormdata({
       name: '',
       password: '',
     })
 
-    if (!(result.name === formdata.name)) {
-      alert("name is not correct")
-      return;
-    }
-    if (!(result.password === formdata.password)) {
-      alert("password is not correct")
-      return;
-    } else {
+    let result = {};
+    if (!formdata.name) result.name = "* name is required";
+    if (!formdata.password) result.password = "* Password is required";
+    setError(result);
+     if (Object.keys(result).length === 0) {
       alert("submit successfully")
       sessionStorage.setItem("login", JSON.stringify(formdata))
       navigate("/")
       return;
-    }
+     }
+    
   }
 
   return (
@@ -50,7 +48,7 @@ const Login = ({ setLogin }) => {
 
         <div>
 
-         
+
           <label className='block'>
             UserName :-
             <input
@@ -67,7 +65,7 @@ const Login = ({ setLogin }) => {
             {error.name && <p className="text-red-500">{error.name}</p>}
           </label>
 
-         
+
           <label className='block mt-4'>
             Password :-
             <input
@@ -84,7 +82,7 @@ const Login = ({ setLogin }) => {
             {error.password && <p className="text-red-500">{error.password}</p>}
           </label>
 
-       
+
           <button
             type='submit'
             className={`rounded-full border mt-6 p-3 w-full font-bold
@@ -96,7 +94,7 @@ const Login = ({ setLogin }) => {
             Submit
           </button>
 
-         
+
           <div className="text-center mt-5">
             <Link to="/signup"
               className={`underline 

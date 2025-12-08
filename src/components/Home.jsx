@@ -113,9 +113,9 @@ const Home = () => {
         )}
         {viewMode === "table" && (
           
-          <table className="w-full border mt-6 text-left">
+          <table className="w-full  overflow-x-auto border mt-6 text-left">
             <thead>
-              <tr className="bg-gray-100 border-b">
+              <tr className=" border-b">
                 <th className="p-3">Image</th>
                 <th className="p-3">Name</th>
                 <th className="p-3">Cuisines</th>
@@ -129,7 +129,7 @@ const Home = () => {
                
                 <tr
                   key={index}
-                  className="border-b hover:bg-gray-50 cursor-pointer"
+                  className="border-b  cursor-pointer"
                 >
                   
                   <td className="p-3">
@@ -141,9 +141,9 @@ const Home = () => {
                     </Link>
                   </td>
                  <Link to={`/detail/${index}`}>
-                  <td className="p-8 font-semibold">{item.name}</td>
+                  <td className="p-2 font-semibold">{item.name}</td>
                 </Link>
-                  <td className="p-3 text-sm">
+                  <td className=" text-sm">
                     <Link to={`/detail/${index}`}>
                     {Array.isArray(item.cuisines)
                       ? item.cuisines.join(", ")

@@ -25,31 +25,36 @@ const Address = () => {
   const handleSave = (e) => {
     e.preventDefault();
 
+
     if (!form.name || !form.phone || !form.pincode || !form.house || !form.street || !form.city || !form.state) {
       alert("Please fill all required fields");
       return;
     }
+
     dispatch(setAddress(form));
     alert("Address saved successfully!");
   };
 
+  const inputClass = `p-3 w-full rounded border focus:outline-none focus:ring-2 ${
+    theme === "dark"
+      ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
+      : "bg-white border-gray-300 text-black focus:ring-blue-500"
+  }`;
+
   return (
-    <div className={` mx-auto p-6 rounded-xl shadow ${theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
-      }`}>
+    <div className={`mx-auto p-6 rounded-xl shadow ${theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"}`}>
       <h2 className="text-2xl text-center font-bold mb-6">Add Delivery Address</h2>
 
-      <form className="flex w-full items-center flex-col gap-4" onSubmit={handleSave}>
+      <form className="flex w-full flex-col gap-4" onSubmit={handleSave}>
         <div className="flex flex-col">
           <label className="font-semibold">Full Name</label>
           <input
             type="text"
+            name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="John Doe"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            placeholder="Enter Name"
+            className={inputClass}
           />
         </div>
 
@@ -61,10 +66,7 @@ const Address = () => {
             value={form.phone}
             onChange={handleChange}
             placeholder="9876543210"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            className={inputClass}
           />
         </div>
 
@@ -76,10 +78,7 @@ const Address = () => {
             value={form.pincode}
             onChange={handleChange}
             placeholder="110001"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            className={inputClass}
           />
         </div>
 
@@ -91,10 +90,19 @@ const Address = () => {
             value={form.house}
             onChange={handleChange}
             placeholder="123, Block A"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            className={inputClass}
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="font-semibold">Street</label>
+          <input
+            type="text"
+            name="street"
+            value={form.street}
+            onChange={handleChange}
+            placeholder="Street Name"
+            className={inputClass}
           />
         </div>
 
@@ -106,10 +114,7 @@ const Address = () => {
             value={form.city}
             onChange={handleChange}
             placeholder="Delhi"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            className={inputClass}
           />
         </div>
 
@@ -121,10 +126,7 @@ const Address = () => {
             value={form.state}
             onChange={handleChange}
             placeholder="Delhi"
-            className={`p-3 w-100 rounded border focus:outline-none focus:ring-2 ${theme === "dark"
-              ? "bg-[#222] border-gray-600 text-white focus:ring-blue-500"
-              : "bg-white border-gray-300 text-black focus:ring-blue-500"
-              }`}
+            className={inputClass}
           />
         </div>
 
@@ -135,6 +137,15 @@ const Address = () => {
           Save Address
         </button>
       </form>
+
+      {savedAddress && (
+        <div className="mt-6 p-4 border rounded bg-gray-50 text-black dark:bg-[#222] dark:text-white">
+          <h3 className="font-semibold mb-2">Saved Address:</h3>
+          <p>{savedAddress.name} {savedAddress.phone}</p>
+          <p>{savedAddress.house} {savedAddress.street}</p>
+          <p>{savedAddress.city} {savedAddress.state} {savedAddress.pincode}</p>
+        </div>
+      )}
     </div>
   );
 };

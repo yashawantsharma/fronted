@@ -26,13 +26,20 @@ const Header = () => {
     }
   };
 
+  const user = sessionStorage.getItem("login");
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("login");
+    navigate("/login");
+  };
+
+
   return (
     <header
-      className={`w-full shadow-sm p-2 sm:p-4 flex flex-nowrap justify-between items-center sticky top-0 z-50 ${
-        theme === "dark" ? "bg-[#222] text-white" : "bg-white text-black"
-      }`}
+      className={`w-full shadow-sm p-2 sm:p-4 flex flex-nowrap justify-between items-center sticky top-0 z-50 ${theme === "dark" ? "bg-[#222] text-white" : "bg-white text-black"
+        }`}
     >
-    
+
       <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
         <button onClick={() => dispatch(openSidebar())} className="text-2xl">
           ☰
@@ -42,11 +49,10 @@ const Header = () => {
         </Link>
       </div>
 
-     
+
       <div
-        className={`flex items-center flex-grow mx-2 min-w-0 ${
-          theme === "dark" ? "bg-[#333] text-white" : "bg-[#eee] text-black"
-        } rounded-full px-2 sm:px-3`}
+        className={`flex items-center flex-grow mx-2 min-w-0 ${theme === "dark" ? "bg-[#333] text-white" : "bg-[#eee] text-black"
+          } rounded-full px-2 sm:px-3`}
         style={{ minHeight: "40px" }}
       >
         <input
@@ -58,15 +64,14 @@ const Header = () => {
         <span>🔍</span>
       </div>
 
-      
+
       <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
 
         <select
           value={selected}
           onChange={(e) => dispatch(setSelectedRestaurant(e.target.value))}
-          className={`hidden sm:block px-2 sm:px-3 sm:py-2 border-2 rounded-lg text-sm sm:text-base ${
-            theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
-          }`}
+          className={`hidden sm:block px-2 sm:px-3 sm:py-2 border-2 rounded-lg text-sm sm:text-base ${theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"
+            }`}
         >
           <option value="">All Restaurants</option>
           {restaurantList.map((r, index) => (
@@ -101,21 +106,33 @@ const Header = () => {
         </button>
 
 
-        <Link
-          to="/login"
-          className="px-2 sm:px-4 py-1 sm:py-2 rounded-full border text-sm sm:text-base"
-        >
-          <span className="sm:hidden">L</span>
-          <span className="hidden sm:inline">Login</span>
-        </Link>
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="px-2 sm:px-4 py-1 sm:py-2 rounded-full border text-sm sm:text-base"
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="px-2 sm:px-4 py-1 sm:py-2 rounded-full border text-sm sm:text-base"
+            >
+              <span className="sm:hidden">L</span>
+              <span className="hidden sm:inline">Login</span>
+            </Link>
 
-        <Link
-          to="/signup"
-          className="px-2 sm:px-4 py-1 sm:py-2 rounded-full bg-red-500 text-white text-sm sm:text-base"
-        >
-          <span className="sm:hidden">S</span>
-          <span className="hidden sm:inline">Sign Up</span>
-        </Link>
+            <Link
+              to="/signup"
+              className="px-2 sm:px-4 py-1 sm:py-2 rounded-full bg-red-500 text-white text-sm sm:text-base"
+            >
+              <span className="sm:hidden">S</span>
+              <span className="hidden sm:inline">Sign Up</span>
+            </Link>
+          </>
+        )}
+
       </div>
     </header>
   );

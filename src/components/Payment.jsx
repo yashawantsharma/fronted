@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../features/cartSlice";
+
+
 
 import { placeOrder } from "../features/orderSlice";
 
@@ -10,7 +13,9 @@ const Payment = () => {
   const navigate = useNavigate();
   const theme = useSelector((state) => state.theme.mode);
   const cart = useSelector((state) => state.cart.items);
-
+  const savedAddress = useSelector((state) => state.order.address);
+  
+console.log(savedAddress);
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -23,7 +28,7 @@ const Payment = () => {
     e.preventDefault();
 
     let result = {};
-
+    
     if (!form.name) result.name = "Name is required";
     if (!form.address) result.address = "Address is required";
     if (!form.cardNumber) result.cardNumber = "Card number is required";
@@ -33,13 +38,13 @@ const Payment = () => {
     setError(result);
 
     if (Object.keys(result).length > 0) return;
-
     const orderData = {
       items: cart,
       payment: form,
     };
 
     dispatch(placeOrder(orderData));
+     dispatch(clearCart())
     alert("Order Successfully Placed!");
     navigate("/orders");
   };
@@ -127,6 +132,7 @@ const Payment = () => {
           {error.cvv && <p className="text-red-500 text-sm">{error.cvv}</p>}
 
           <button
+           type="submit"
             className="w-full bg-red-500 text-white py-3 rounded-lg mt-3 font-semibold hover:bg-red-600"
           >
             Submit Payment

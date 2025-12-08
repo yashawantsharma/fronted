@@ -58,6 +58,12 @@ const Detail = () => {
 
   });
 
+  //   const filtered = restaurant.filter((item) => {
+  //   const name = item?.name?.toLowerCase() || "";
+  //   const searchText = search?.toLowerCase() || "";
+  //   return name.includes(searchText);
+  // });
+
   if (!restaurant)
     return (
       <div

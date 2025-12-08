@@ -1,10 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleLike } from "../features/likedSlice";
 
 const LikedItems = () => {
+
   const theme = useSelector((state) => state.theme.mode);
   const liked = useSelector((state) => state.liked.items);
   const viewMode = useSelector((state) => state.view.mode); 
+
+ const dispatch = useDispatch();
+  const isLiked = (name) => liked.some((i) => i.name === name);
+  const handleLike = (item) => {
+    dispatch(toggleLike(item));
+  };
+
 
   return (
     <div
@@ -67,10 +76,17 @@ const LikedItems = () => {
           {liked.map((item, index) => (
             <div
               key={index}
-              className={`p-7 rounded-lg shadow flex flex-col items-center gap-2 ${
+              className={`p-7 rounded-lg shadow flex flex-col items-center gap-2 relative ${
                 theme === "dark" ? "bg-[#1a1a1a]" : "bg-white"
               }`}
             >
+              <button
+                    onClick={() => handleLike(item)}
+                    className="absolute top-2 right-2 text-2xl"
+                  >
+                    {isLiked(item.name) ? "❤️" : "🤍"}
+                  </button>
+              
               {item.image && (
                 <img
                   src={item.image}
@@ -79,12 +95,14 @@ const LikedItems = () => {
                 />
               )}
               <h2 className="text-lg font-semibold">{item.name}</h2>
+              
               <p>₹{item.price || item.cost_for_two}</p>
               {item.description && (
                 <p className="text-sm text-gray-400 text-center">
                   {item.description}
                 </p>
               )}
+              
             </div>
           ))}
         </div>
