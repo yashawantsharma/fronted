@@ -14,10 +14,18 @@ import Orders from "./components/Orders";
 import Address from "./components/Address";
 import LikedItems from "./components/LikedItems";
 import Chat from "./components/Chat";
+import { useSelector } from "react-redux";
+
 
 const App = () => {
+  const isOpen = useSelector((s) => s.sidebar.isOpen);
   return (
     <BrowserRouter>
+
+        {/* <div 
+        className={`min-h-screen transition-all duration-300 
+        ${isOpen ? "ml-64" : "ml-0"}`}
+      > */}
       <Sidebar />
 
       <div className="min-h-screen transition-all">
@@ -42,6 +50,7 @@ const App = () => {
         </Routes>
 
         <Footer />
+        {/* </div> */}
       </div>
     </BrowserRouter>
   );

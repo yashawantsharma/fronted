@@ -60,7 +60,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`fixed top-20 left-0 h-full w-64 p-5 shadow-lg transition-transform duration-300 z-50 
+            className={`fixed top-17 left-0 h-full w-64 p-5 shadow-lg transition-transform duration-300 z-50 
       ${theme === "dark" ? "bg-[#111] text-white" : "bg-white text-black"} 
       ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
