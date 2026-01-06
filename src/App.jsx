@@ -22,10 +22,7 @@ const App = () => {
   return (
     <BrowserRouter>
 
-        {/* <div 
-        className={`min-h-screen transition-all duration-300 
-        ${isOpen ? "ml-64" : "ml-0"}`}
-      > */}
+       
       <Sidebar />
 
       <div className="min-h-screen transition-all">
